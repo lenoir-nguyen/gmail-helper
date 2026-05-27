@@ -1,0 +1,28 @@
+# Environment files — NEVER commit these
+.env
+.env.local
+backend/.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+.pytest_cache/
+
+# Node
+node_modules/
+.next/
+.vercel/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Google credentials (if downloaded)
+backend/credentials.json
+backend/token.json
