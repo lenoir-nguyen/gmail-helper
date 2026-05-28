@@ -30,8 +30,13 @@ For each email extract:
                                     find the real company name in the body text.
                                   - If still unclear, extract the company name from
                                     the sender's email domain (e.g. rbc.com -> "RBC").
-  position                      : the job title from subject or body.
-                                  If not explicitly stated, write "Not specified".
+  position                      : the job title / role applied for.
+                                  Search in this order:
+                                  1. Subject line (e.g. "Application for Senior Engineer")
+                                  2. Email body — look for phrases like "position of",
+                                     "role of", "applied for", "your application for",
+                                     "the [Job Title] role", "opening for", "job title:"
+                                  3. If truly not found anywhere, write "Not specified".
   method_of_application         : one of:
       "LinkedIn"        - sender contains linkedin.com OR subject/body mentions LinkedIn
       "Indeed"          - sender contains indeed.com OR subject/body mentions Indeed

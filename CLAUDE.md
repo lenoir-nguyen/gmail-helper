@@ -230,8 +230,9 @@ application found, extract:
 - Position: the job title / role I applied for
 - Expense: leave empty
 - Interview/Offer of Employment: leave empty
-- Accepted/Rejected & Reason: "waiting" (by default), "rejected" if the email
-  mentions rejection, or "interviewed" if the email mentions an interview/next steps
+- Accepted/Rejected & Reason: "no response" (by default), "rejected" if the email
+  mentions rejection, "interviewed" if the email mentions an interview/next steps,
+  or "accepted" if the email contains a job offer
 
 Sort results by date ascending (oldest first).
 ```

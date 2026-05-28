@@ -225,7 +225,7 @@ application found, extract:
 - Position: the job title / role I applied for
 - Expense: leave empty
 - Interview/Offer of Employment: leave empty
-- Accepted/Rejected & Reason: classify as "waiting", "rejected", "interviewed", or "accepted"
+- Accepted/Rejected & Reason: classify as "no response", "rejected", "interviewed", or "accepted"
   based on the email content
 
 Sort results by date ascending (oldest first).
@@ -235,7 +235,7 @@ Sort results by date ascending (oldest first).
 
 | Value | When to use |
 |---|---|
-| `waiting` | Standard confirmation — received, under review, we'll be in touch (DEFAULT) |
+| `no response` | Standard confirmation — received, under review, we'll be in touch (DEFAULT) |
 | `rejected` | Not moving forward, regret to inform, position filled, other candidates |
 | `interviewed` | Interview invitation, phone screen, schedule a call, next steps |
 | `accepted` | Job offer, offer letter, congratulations, welcome to the team |
