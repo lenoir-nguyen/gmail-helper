@@ -42,7 +42,7 @@ For each email extract:
   accepted_rejected_reason      : read the email body carefully and classify as
                                   exactly one of these four values:
 
-      "waiting"     - The email is a standard application acknowledgement.
+      "no response" - The email is a standard application acknowledgement.
                       Signals: "thank you for applying", "we received your application",
                       "we will review", "we'll be in touch", "under review",
                       "we will contact you", "application submitted successfully".
@@ -67,7 +67,7 @@ For each email extract:
                       "offer letter", "pleased to extend an offer".
 
 Return a JSON array with exactly one entry per email - no markdown, no skipping.
-accepted_rejected_reason must be one of: "waiting", "rejected", "interviewed", "accepted".
+accepted_rejected_reason must be one of: "no response", "rejected", "interviewed", "accepted".
 
 [
   {
@@ -77,7 +77,7 @@ accepted_rejected_reason must be one of: "waiting", "rejected", "interviewed", "
     "method_of_application": "LinkedIn",
     "expense": "",
     "interview_offer_of_employment": "",
-    "accepted_rejected_reason": "waiting"
+    "accepted_rejected_reason": "no response"
   }
 ]
 """
