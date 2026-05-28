@@ -365,7 +365,7 @@ def _populate_word(file_bytes: bytes, agent_result: dict) -> bytes:
         # Header row
         for col_idx, col_name in enumerate(columns):
             cell = new_table.rows[0].cells[col_idx]
-            _set_cell_text(cell, col_name, bold=True)
+            _set_cell_text(cell, col_name)
 
         # Data rows
         for row_data in data:

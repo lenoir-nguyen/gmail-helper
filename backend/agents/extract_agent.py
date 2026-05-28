@@ -39,7 +39,13 @@ For each email extract:
       "Referral"        - body explicitly mentions a referral
   expense                       : always ""
   interview_offer_of_employment : always ""
-  accepted_rejected_reason      : always ""
+  accepted_rejected_reason      : infer the current status from the email content:
+      "waiting"    - standard application confirmation (thank you for applying,
+                     we received your application, we will review, etc.)
+      "rejected"   - email explicitly mentions rejection, not moving forward,
+                     position filled, or no longer considering the candidate
+      "interviewed" - email mentions interview scheduled, invitation to interview,
+                      phone screen, or next steps involving a meeting/call
 
 Return a JSON array with exactly one entry per email - no markdown, no skipping:
 [
@@ -50,7 +56,7 @@ Return a JSON array with exactly one entry per email - no markdown, no skipping:
     "method_of_application": "LinkedIn",
     "expense": "",
     "interview_offer_of_employment": "",
-    "accepted_rejected_reason": ""
+    "accepted_rejected_reason": "waiting"
   }
 ]
 """
