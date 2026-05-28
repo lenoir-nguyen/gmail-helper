@@ -1,7 +1,7 @@
 # Gmail Helper — Build Log & Conversation Summary
 
-**Date**: 2026-05-27  
-**Status**: Local development complete, ready for production deployment  
+**Date**: 2026-05-28  
+**Status**: Local development complete, fixes applied, ready for production deployment  
 **Repo**: https://github.com/lenoir-nguyen/gmail-helper
 
 ---
@@ -210,7 +210,7 @@ def _clone_row(table, row_data, col_map):
 | `position` | Position |
 | `expense` | Expense (always empty) |
 | `interview_offer_of_employment` | Interview/Offer of Employment (always empty) |
-| `accepted_rejected_reason` | Accepted/Rejected & Reason (always empty) |
+| `accepted_rejected_reason` | Accepted/Rejected & Reason — `no response` / `rejected` / `interviewed` / `accepted` |
 
 ---
 
@@ -258,6 +258,10 @@ Sort results by date ascending (oldest first).
 | charmap encoding error | Windows console can't encode `→` `…` | `PYTHONUTF8=1` + replaced Unicode in print() |
 | Agent stops at 2-12 records | LLM loses track across many tool calls | Architectural fix: Python does searching, LLM only extracts |
 | Extract agent skips records | INCLUDE/SKIP logic too strict | Changed to "extract from ALL emails, never skip" |
+| accepted_rejected_reason always empty | `_SYSTEM_PROMPT` hardcoded `always ""` | LLM now infers status from email body with explicit signal words |
+| accepted_rejected_reason showing "waiting" | Old value in prompt before user renamed it | Updated to `"no response"` as default; restart backend to reload |
+| Position showing "Not specified" | LLM only looked at subject line | Updated prompt to search body for "applied for", "position of", "the X role" |
+| bold=True crash in doc_service fallback | `_set_cell_text()` doesn't accept bold param | Removed the invalid argument from fallback code path |
 
 ---
 
@@ -313,4 +317,38 @@ After deploying, add to Authorized Redirect URIs:
 - Job application tracking: ~150 records found (user's actual inbox count)
 - Word document: populated correctly with all fields in right columns
 - Download: returns correct .docx or .xlsx matching uploaded file type
+- `accepted_rejected_reason` now populated: `no response` / `rejected` / `interviewed` / `accepted`
+- `position` now searches email body when not found in subject line
 - GitHub: https://github.com/lenoir-nguyen/gmail-helper (private repo)
+
+---
+
+## Session 2026-05-28 — Fixes Applied
+
+### Changes made this session
+
+1. **`accepted_rejected_reason` was always empty**
+   - Root cause: `_SYSTEM_PROMPT` in `extract_agent.py` said `always ""`
+   - Fix: LLM now classifies based on email body with explicit signal words per status
+
+2. **Status value renamed `"waiting"` → `"no response"`** (user's preference)
+   - Updated in `extract_agent.py` prompt and all docs
+
+3. **Status classification — 4 values with signal words**
+   - `"no response"` — standard confirmation (default)
+   - `"rejected"` — not moving forward, regret to inform, position filled
+   - `"interviewed"` — schedule an interview, phone screen, next steps
+   - `"accepted"` — offer of employment, congratulations, welcome to the team
+
+4. **Position extraction improved**
+   - Now searches email body for phrases like "applied for", "position of",
+     "your application for", "the [Title] role", "opening for", "job title:"
+   - Only falls back to "Not specified" if truly not found anywhere
+
+5. **`bold=True` bug fixed in `doc_service.py`**
+   - `_set_cell_text()` was called with `bold=True` in the fallback new-table path
+   - Would crash if no matching table found in the document
+   - Removed the invalid argument
+
+### Pending
+- Production deployment (Railway + Vercel) — deferred to next session
