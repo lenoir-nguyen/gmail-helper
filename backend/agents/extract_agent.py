@@ -39,15 +39,36 @@ For each email extract:
       "Referral"        - body explicitly mentions a referral
   expense                       : always ""
   interview_offer_of_employment : always ""
-  accepted_rejected_reason      : infer the current status from the email content:
-      "waiting"    - standard application confirmation (thank you for applying,
-                     we received your application, we will review, etc.)
-      "rejected"   - email explicitly mentions rejection, not moving forward,
-                     position filled, or no longer considering the candidate
-      "interviewed" - email mentions interview scheduled, invitation to interview,
-                      phone screen, or next steps involving a meeting/call
+  accepted_rejected_reason      : read the email body carefully and classify as
+                                  exactly one of these four values:
 
-Return a JSON array with exactly one entry per email - no markdown, no skipping:
+      "waiting"     - The email is a standard application acknowledgement.
+                      Signals: "thank you for applying", "we received your application",
+                      "we will review", "we'll be in touch", "under review",
+                      "we will contact you", "application submitted successfully".
+                      This is the default when no stronger signal is present.
+
+      "rejected"    - The email explicitly says they are NOT moving forward.
+                      Signals: "not moving forward", "we will not be proceeding",
+                      "regret to inform", "unfortunately", "we have decided",
+                      "position has been filled", "other candidates",
+                      "we won't be moving forward", "no longer under consideration",
+                      "we have moved forward with other applicants".
+
+      "interviewed" - The email invites the candidate to an interview or next step.
+                      Signals: "we would like to invite you", "schedule an interview",
+                      "phone screen", "video interview", "please select a time",
+                      "next steps", "speak with our team", "meet with us",
+                      "we'd like to learn more about you", "schedule a call".
+
+      "accepted"    - The email contains a job offer or acceptance.
+                      Signals: "offer of employment", "we are pleased to offer",
+                      "congratulations", "welcome to the team", "job offer",
+                      "offer letter", "pleased to extend an offer".
+
+Return a JSON array with exactly one entry per email - no markdown, no skipping.
+accepted_rejected_reason must be one of: "waiting", "rejected", "interviewed", "accepted".
+
 [
   {
     "date_of_application": "2026-04-15",
